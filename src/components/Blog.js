@@ -28,6 +28,7 @@ const Blog = ({ blog, addLike }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
+    paddingBottom: 10,
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5
@@ -56,6 +57,7 @@ const Blog = ({ blog, addLike }) => {
             saved by {blog.user.name ? blog.user.name : blog.user.username}
           </li>
         </ul>
+        <button>remove</button>
       </div>
     </div>
   )

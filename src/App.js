@@ -95,10 +95,14 @@ const App = () => {
   const blogFormRef = useRef()
 
   const blogForm = () => (
-    <Toggleable buttonLabel='new blog' ref={blogFormRef}>
+    <Toggleable buttonLabel='create new blog entry' ref={blogFormRef}>
       <BlogForm createBlog={handleCreateNew}/>
     </Toggleable>
   )
+
+  const newEntryButtonStyle = {
+    paddingBottom: 10
+  }
 
   return (
     <div>
@@ -111,7 +115,7 @@ const App = () => {
           <>
           <h2>blogs</h2>
           <p>{user.name ? user.name : user.username} logged-in
-            <button onClick={handleLogout}>logout</button>
+            <button style={newEntryButtonStyle} onClick={handleLogout}>logout</button>
           </p>
           {blogForm()}
           {blogs

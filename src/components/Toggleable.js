@@ -17,7 +17,7 @@ const Toggleable = forwardRef((props, ref) => {
   })
 
   return (
-    <div>
+    <div style={{paddingBottom: 10}}>
       <div style={hideWhenVisible}>
         <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
