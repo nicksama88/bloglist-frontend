@@ -92,6 +92,23 @@ const App = () => {
     }
   }
 
+  const handleDeleteBlog = async (blogObject) => {
+    try {
+      await blogService.remove(blogObject)
+      const indexToRemove = blogs.findIndex(blog => blog.id === blogObject.id)
+      const tempBlogs = blogs.slice(0, indexToRemove)
+        .concat(blogs.slice(indexToRemove + 1, blogs.length))
+      setBlogs(tempBlogs)
+    } catch {
+      user.username !== blogObject.user.username
+        ? setErrorMessage('blog can only be deleted by user who saved it')
+        : setErrorMessage('error in removing blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const blogFormRef = useRef()
 
   const blogForm = () => (
@@ -99,10 +116,6 @@ const App = () => {
       <BlogForm createBlog={handleCreateNew}/>
     </Toggleable>
   )
-
-  const newEntryButtonStyle = {
-    paddingBottom: 10
-  }
 
   return (
     <div>
@@ -115,13 +128,18 @@ const App = () => {
           <>
           <h2>blogs</h2>
           <p>{user.name ? user.name : user.username} logged-in
-            <button style={newEntryButtonStyle} onClick={handleLogout}>logout</button>
+            <button onClick={handleLogout}>logout</button>
           </p>
           {blogForm()}
           {blogs
             .sort((a, b) => b.likes - a.likes)
             .map(blog =>
-            <Blog key={blog.id} blog={blog} addLike={handleAddLike} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              addLike={handleAddLike}
+              removeBlog={handleDeleteBlog}
+            />
           )}
           </>
         }

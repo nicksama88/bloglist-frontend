@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, addLike }) => {
+const Blog = ({ blog, addLike, removeBlog }) => {
 
   const [hideDetails, setShowDetails] = useState(true)
   const [likes, setLikes] = useState(blog.likes)
@@ -23,6 +23,10 @@ const Blog = ({ blog, addLike }) => {
       addLike(updatedBlog, blog.id)
       setLikes(likes + 1)
 
+  }
+
+  const callRemoveBlog = () => {
+    removeBlog(blog)
   }
 
   const blogStyle = {
@@ -57,7 +61,7 @@ const Blog = ({ blog, addLike }) => {
             saved by {blog.user.name ? blog.user.name : blog.user.username}
           </li>
         </ul>
-        <button>remove</button>
+        <button onClick={callRemoveBlog}>remove</button>
       </div>
     </div>
   )
