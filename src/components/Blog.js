@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, addLike, removeBlog }) => {
+const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
 
   const [hideDetails, setShowDetails] = useState(true)
   const [likes, setLikes] = useState(blog.likes)
@@ -26,7 +26,9 @@ const Blog = ({ blog, addLike, removeBlog }) => {
   }
 
   const callRemoveBlog = () => {
-    if (window.confirm(`Do you really want to delete ${blog.title}, by ${blog.author}?`)) {
+    if (window.confirm(
+      `Do you really want to delete ${blog.title}, by ${blog.author}?`
+    )) {
       removeBlog(blog)
     }
   }
@@ -63,7 +65,12 @@ const Blog = ({ blog, addLike, removeBlog }) => {
             saved by {blog.user.name ? blog.user.name : blog.user.username}
           </li>
         </ul>
-        <button onClick={callRemoveBlog}>remove</button>
+        <button
+          onClick={callRemoveBlog}
+          style={
+            {display: currentUser.username === blog.user.username ? '' : 'none'}
+          }
+        >remove</button>
       </div>
     </div>
   )
