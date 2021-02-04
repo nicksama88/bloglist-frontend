@@ -26,7 +26,9 @@ const Blog = ({ blog, addLike, removeBlog }) => {
   }
 
   const callRemoveBlog = () => {
-    removeBlog(blog)
+    if (window.confirm(`Do you really want to delete ${blog.title}, by ${blog.author}?`)) {
+      removeBlog(blog)
+    }
   }
 
   const blogStyle = {
