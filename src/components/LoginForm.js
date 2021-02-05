@@ -7,7 +7,7 @@ const LoginForm = ({ handleLogin }) => {
 
   const loginUser = (event) => {
     event.preventDefault()
-    handleLogin(username, password)
+    handleLogin(username.toLocaleLowerCase(), password)
     setUsername('')
     setPassword('')
   }
