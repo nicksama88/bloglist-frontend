@@ -34,6 +34,18 @@ const LoginForm = ({ handleLogin }) => {
           />
       </div>
       <button type='submit'>login</button>
+      <div>
+        Feel free to login with the following credentials:
+        <ul>
+          <li>
+            Username: guest
+          </li>
+          <li>
+            Password: gimmieblogs
+          </li>
+        </ul>
+        Also, please don't save anything too weird while you are here!
+      </div>
     </form>
   )
 
