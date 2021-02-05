@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
-import Notification from './components/Notification'
+import { Notification, Error } from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Toggleable from './components/Toggleable'
@@ -10,7 +10,8 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [notification, setNotification] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -27,6 +28,20 @@ const App = () => {
     }
   }, [])
 
+  const createMessage = ({ text='', type }) => {
+    if (type === 'notification') {
+      setNotification(text)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    } else if (type === 'error') {
+      setErrorMessage(text)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const handleLogin = async (username, password) => {
 
     try {
@@ -37,16 +52,14 @@ const App = () => {
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setErrorMessage(`${user.name ? user.name : user.username} successfully logged in`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      createMessage({
+        text: `${user.name ? user.name : user.username} successfully logged in`,
+        type: 'notification'
+      })
 
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      createMessage({text: exception.response.data.error, type: 'error'})
+      console.log(exception.response.data.error)
     }
   }
 
@@ -54,10 +67,7 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     const loggedOutUser = user.name ? user.name : user.username
     setUser(null)
-    setErrorMessage(`${loggedOutUser} logged out`)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)
+    createMessage({text:`${loggedOutUser} logged out`, type:'notification'})
   }
 
   const handleCreateNew = async (blogObject) => {
@@ -65,15 +75,12 @@ const App = () => {
     try {
       const returnedData = await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedData))
-      setErrorMessage(`A new blog ${returnedData.title} by ${returnedData.author} added`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    } catch {
-      setErrorMessage('error in adding new blog')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      createMessage({
+        text:`A new blog ${returnedData.title} by ${returnedData.author} added`, 
+        type:'notification'})
+    } catch (exception) {
+      createMessage({text:exception.response.data.error, type:'error'})
+      console.log(exception.response.data.error)
     }
   }
 
@@ -84,11 +91,8 @@ const App = () => {
       const tempBlogs = [...blogs]
       tempBlogs[indexToUpdate].likes += 1
       setBlogs(tempBlogs)
-    } catch {
-      setErrorMessage('error in updating like')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+    } catch (exception) {
+      createMessage({text:exception.response.data.error, type:'error'})
     }
   }
 
@@ -99,13 +103,11 @@ const App = () => {
       const tempBlogs = blogs.slice(0, indexToRemove)
         .concat(blogs.slice(indexToRemove + 1, blogs.length))
       setBlogs(tempBlogs)
-    } catch {
+      createMessage({text: 'blog deleted', type: 'notification'})
+    } catch (exception) {
       user.username !== blogObject.user.username
-        ? setErrorMessage('blog can only be deleted by user who saved it')
-        : setErrorMessage('error in removing blog')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+        ? createMessage({text:'blog can only be deleted by user who saved it', type:'error'})
+        : createMessage({text:exception.response.data.error, type:'error'})
     }
   }
 
@@ -119,7 +121,8 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification message={notification} />
+      <Error message={errorMessage} />
       <div>
         {!user &&
           <LoginForm handleLogin={handleLogin} />
