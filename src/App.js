@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+
 import Blog from './components/Blog'
-import { Notification, Error } from './components/Notification'
+import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Toggleable from './components/Toggleable'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
+
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
 
+  const dispatch = useDispatch()
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -29,17 +33,7 @@ const App = () => {
   }, [])
 
   const createMessage = ({ text='', type }) => {
-    if (type === 'notification') {
-      setNotification(text)
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000)
-    } else if (type === 'error') {
-      setErrorMessage(text)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
+    dispatch(setNotification(text, type, 5))
   }
 
   const handleLogin = async (username, password) => {
@@ -121,8 +115,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={notification} />
-      <Error message={errorMessage} />
+      <Notification />
       <div>
         {!user &&
           <LoginForm handleLogin={handleLogin} />
