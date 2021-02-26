@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/blogReducer'
+import Toggleable from '../components/Toggleable'
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = () => {
+
+  const blogFormRef = useRef()
+
+  const dispatch = useDispatch()
 
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -8,11 +15,13 @@ const BlogForm = ({ createBlog }) => {
 
   const addBlog = (event) => {
     event.preventDefault()
-    createBlog({
+    blogFormRef.current.toggleVisibility()
+    dispatch(createBlog({
       title: title === '' ? undefined : title,
       author: author === '' ? undefined : author,
       url: url === '' ? undefined : url,
-    })
+      })
+    )
 
     setTitle('')
     setAuthor('')
@@ -20,6 +29,7 @@ const BlogForm = ({ createBlog }) => {
   }
 
   return (
+    <Toggleable buttonLabel='create new blog entry' ref={blogFormRef}>
     <div>
       <h2>Create new entry</h2>
       <form onSubmit={addBlog}>
@@ -53,6 +63,7 @@ const BlogForm = ({ createBlog }) => {
         <button type='submit'>create entry</button>
       </form>
     </div>
+    </Toggleable>
   )
 }
 
