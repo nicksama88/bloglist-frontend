@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
-import Blog from './components/Blog'
+// import Blog from './components/Blog'
+import BlogList from './components/blogList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
-import BlogForm from './components/BlogForm'
-import Toggleable from './components/Toggleable'
+// import BlogForm from './components/BlogForm'
+// import Toggleable from './components/Toggleable'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 import { setNotification } from './reducers/notificationReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
   const dispatch = useDispatch()
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
+    dispatch(initializeBlogs())
+    // blogService.getAll().then(blogs =>
+    //   setBlogs( blogs )
+    // )
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -64,54 +67,54 @@ const App = () => {
     createMessage({text:`${loggedOutUser} logged out`, type:'notification'})
   }
 
-  const handleCreateNew = async (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    try {
-      const returnedData = await blogService.create(blogObject)
-      setBlogs(blogs.concat(returnedData))
-      createMessage({
-        text:`A new blog ${returnedData.title} by ${returnedData.author} added`, 
-        type:'notification'})
-    } catch (exception) {
-      createMessage({text:exception.response.data.error, type:'error'})
-      console.log(exception.response.data.error)
-    }
-  }
+  // const handleCreateNew = async (blogObject) => {
+  //   blogFormRef.current.toggleVisibility()
+  //   try {
+  //     const returnedData = await blogService.create(blogObject)
+  //     setBlogs(blogs.concat(returnedData))
+  //     createMessage({
+  //       text:`A new blog ${returnedData.title} by ${returnedData.author} added`, 
+  //       type:'notification'})
+  //   } catch (exception) {
+  //     createMessage({text:exception.response.data.error, type:'error'})
+  //     console.log(exception.response.data.error)
+  //   }
+  // }
 
-  const handleAddLike = async (blogObject, blogId) => {
-    try {
-      await blogService.addLike(blogObject, blogId)
-      const indexToUpdate = blogs.findIndex(blog => blog.id === blogId)
-      const tempBlogs = [...blogs]
-      tempBlogs[indexToUpdate].likes += 1
-      setBlogs(tempBlogs)
-    } catch (exception) {
-      createMessage({text:exception.response.data.error, type:'error'})
-    }
-  }
+  // const handleAddLike = async (blogObject, blogId) => {
+  //   try {
+  //     await blogService.addLike(blogObject, blogId)
+  //     const indexToUpdate = blogs.findIndex(blog => blog.id === blogId)
+  //     const tempBlogs = [...blogs]
+  //     tempBlogs[indexToUpdate].likes += 1
+  //     setBlogs(tempBlogs)
+  //   } catch (exception) {
+  //     createMessage({text:exception.response.data.error, type:'error'})
+  //   }
+  // }
 
-  const handleDeleteBlog = async (blogObject) => {
-    try {
-      await blogService.remove(blogObject)
-      const indexToRemove = blogs.findIndex(blog => blog.id === blogObject.id)
-      const tempBlogs = blogs.slice(0, indexToRemove)
-        .concat(blogs.slice(indexToRemove + 1, blogs.length))
-      setBlogs(tempBlogs)
-      createMessage({text: 'blog deleted', type: 'notification'})
-    } catch (exception) {
-      user.username !== blogObject.user.username
-        ? createMessage({text:'blog can only be deleted by user who saved it', type:'error'})
-        : createMessage({text:exception.response.data.error, type:'error'})
-    }
-  }
+  // const handleDeleteBlog = async (blogObject) => {
+  //   try {
+  //     await blogService.remove(blogObject)
+  //     const indexToRemove = blogs.findIndex(blog => blog.id === blogObject.id)
+  //     const tempBlogs = blogs.slice(0, indexToRemove)
+  //       .concat(blogs.slice(indexToRemove + 1, blogs.length))
+  //     setBlogs(tempBlogs)
+  //     createMessage({text: 'blog deleted', type: 'notification'})
+  //   } catch (exception) {
+  //     user.username !== blogObject.user.username
+  //       ? createMessage({text:'blog can only be deleted by user who saved it', type:'error'})
+  //       : createMessage({text:exception.response.data.error, type:'error'})
+  //   }
+  // }
 
-  const blogFormRef = useRef()
+  // const blogFormRef = useRef()
 
-  const blogForm = () => (
-    <Toggleable buttonLabel='create new blog entry' ref={blogFormRef}>
-      <BlogForm createBlog={handleCreateNew}/>
-    </Toggleable>
-  )
+  // const blogForm = () => (
+  //   <Toggleable buttonLabel='create new blog entry' ref={blogFormRef}>
+  //     <BlogForm createBlog={handleCreateNew}/>
+  //   </Toggleable>
+  // )
 
   return (
     <div>
@@ -126,8 +129,9 @@ const App = () => {
           <p>{user.name ? user.name : user.username} logged-in
             <button onClick={handleLogout}>logout</button>
           </p>
-          {blogForm()}
-          {blogs
+          {/* {blogForm()} */}
+          <BlogList user={user} />
+          {/* {blogs
             .sort((a, b) => b.likes - a.likes)
             .map(blog =>
             <Blog
@@ -137,7 +141,7 @@ const App = () => {
               removeBlog={handleDeleteBlog}
               currentUser={user}
             />
-          )}
+          )} */}
           </>
         }
       </div>
