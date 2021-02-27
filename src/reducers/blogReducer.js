@@ -7,6 +7,16 @@ const blogReducer = (state = [], action) => {
       return state.concat(action.data).sort((a, b) => b.likes - a.likes)
     case 'ADD_BLOG':
       return state.concat(action.data)
+    case 'LIKE':
+      const id = action.data.id
+      const blogToChange = state.find(blog => blog.id === id)
+      const changedBlog = {
+        ...blogToChange,
+        likes: blogToChange.likes + 1
+      }
+      return state
+        .map(blog => blog.id !== id ? blog : changedBlog)
+        .sort((a, b) => b.likes - a.likes)
     default:
       return state
   }
@@ -40,6 +50,23 @@ export const createBlog = (blogObject) => {
       console.log(exception.response.data.error)
     }
     
+  }
+}
+
+export const addLike = (id) => {
+  return async dispatch => {
+    try{
+      const blogToChange = await blogService.getOne(id)
+      blogToChange.likes += 1
+      const changedBlog = await blogService.updateOne(blogToChange)
+      dispatch({
+        type: 'LIKE',
+        data: changedBlog,
+      })
+    } catch (exception) {
+      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      console.log(exception.response.data.error)
+    }
   }
 }
 

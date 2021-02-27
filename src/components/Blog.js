@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
 
   const [hideDetails, setShowDetails] = useState(true)
-  const [likes, setLikes] = useState(blog.likes)
 
   const showDetails = { display: hideDetails ? 'none' : '' }
 
@@ -12,17 +11,7 @@ const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
   }
 
   const updateLikes = () => {
-
-      const updatedBlog = {
-        title: blog.title,
-        author: blog.author,
-        url: blog.url,
-        likes: likes + 1,
-      }
-
-      addLike(updatedBlog, blog.id)
-      setLikes(likes + 1)
-
+      addLike(blog.id)
   }
 
   const callRemoveBlog = () => {

@@ -1,11 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setNotification } from '../reducers/notificationReducer'
+import { addLike } from '../reducers/blogReducer'
 
 import Blog from '../components/Blog'
-
-import blogService from '../services/blogs'
 
 const BlogList = (user) => {
 
@@ -15,20 +13,8 @@ const BlogList = (user) => {
 
   const dispatch = useDispatch()
 
-  const createMessage = ({ text='', type }) => {
-    dispatch(setNotification(text, type, 5))
-  }
-
-  const handleAddLike = async (blogObject, blogId) => {
-    // try {
-    //   await blogService.addLike(blogObject, blogId)
-    //   const indexToUpdate = blogs.findIndex(blog => blog.id === blogId)
-    //   const tempBlogs = [...blogs]
-    //   tempBlogs[indexToUpdate].likes += 1
-    //   setBlogs(tempBlogs)
-    // } catch (exception) {
-    //   createMessage({text:exception.response.data.error, type:'error'})
-    // }
+  const handleAddLike = (blogId) => {
+    dispatch(addLike(blogId))
   }
 
   const handleDeleteBlog = async (blogObject) => {
