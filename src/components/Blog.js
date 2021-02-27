@@ -18,7 +18,7 @@ const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
     if (window.confirm(
       `Do you really want to delete ${blog.title}, by ${blog.author}?`
     )) {
-      removeBlog(blog)
+      removeBlog(blog.id)
     }
   }
 

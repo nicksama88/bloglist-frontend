@@ -62,33 +62,6 @@ const App = () => {
     createMessage({text:`${loggedOutUser} logged out`, type:'notification'})
   }
 
-  // const handleAddLike = async (blogObject, blogId) => {
-  //   try {
-  //     await blogService.addLike(blogObject, blogId)
-  //     const indexToUpdate = blogs.findIndex(blog => blog.id === blogId)
-  //     const tempBlogs = [...blogs]
-  //     tempBlogs[indexToUpdate].likes += 1
-  //     setBlogs(tempBlogs)
-  //   } catch (exception) {
-  //     createMessage({text:exception.response.data.error, type:'error'})
-  //   }
-  // }
-
-  // const handleDeleteBlog = async (blogObject) => {
-  //   try {
-  //     await blogService.remove(blogObject)
-  //     const indexToRemove = blogs.findIndex(blog => blog.id === blogObject.id)
-  //     const tempBlogs = blogs.slice(0, indexToRemove)
-  //       .concat(blogs.slice(indexToRemove + 1, blogs.length))
-  //     setBlogs(tempBlogs)
-  //     createMessage({text: 'blog deleted', type: 'notification'})
-  //   } catch (exception) {
-  //     user.username !== blogObject.user.username
-  //       ? createMessage({text:'blog can only be deleted by user who saved it', type:'error'})
-  //       : createMessage({text:exception.response.data.error, type:'error'})
-  //   }
-  // }
-
   return (
     <div>
       <Notification />

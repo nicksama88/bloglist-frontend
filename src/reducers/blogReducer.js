@@ -8,15 +8,17 @@ const blogReducer = (state = [], action) => {
     case 'ADD_BLOG':
       return state.concat(action.data)
     case 'LIKE':
-      const id = action.data.id
-      const blogToChange = state.find(blog => blog.id === id)
+      const blogToChange = state.find(blog => blog.id === action.data.id)
       const changedBlog = {
         ...blogToChange,
         likes: blogToChange.likes + 1
       }
       return state
-        .map(blog => blog.id !== id ? blog : changedBlog)
+        .map(blog => blog.id !== action.data.id ? blog : changedBlog)
         .sort((a, b) => b.likes - a.likes)
+    case 'REMOVE':
+      return state
+        .filter(blog => blog.id !== action.data.id)
     default:
       return state
   }
@@ -62,6 +64,22 @@ export const addLike = (id) => {
       dispatch({
         type: 'LIKE',
         data: changedBlog,
+      })
+    } catch (exception) {
+      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      console.log(exception.response.data.error)
+    }
+  }
+}
+
+export const deleteBlog = (id) => {
+  return async dispatch => {
+    try {
+      const blogToRemove = await blogService.getOne(id)
+      await blogService.remove(blogToRemove)
+      dispatch({
+        type: 'REMOVE',
+        data: blogToRemove
       })
     } catch (exception) {
       dispatch(setNotification(exception.response.data.error, 'error', 5))
