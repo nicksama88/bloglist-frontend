@@ -23,7 +23,7 @@ const clearNotification = {
 }
 
 export const setNotification = (text, className, timer) => {
-  return async dispatch => {
+  return dispatch => {
     dispatch({
       type: 'NOTIFICATION',
       data: {
