@@ -81,6 +81,11 @@ export const deleteBlog = (id) => {
         type: 'REMOVE',
         data: blogToRemove
       })
+      dispatch(setNotification(
+        `Blog ${blogToRemove.title} has been removed`,
+        'notification',
+        5
+      ))
     } catch (exception) {
       dispatch(setNotification(exception.response.data.error, 'error', 5))
       console.log(exception.response.data.error)
