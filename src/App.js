@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-// import Blog from './components/Blog'
 import BlogList from './components/blogList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
@@ -12,9 +11,11 @@ import loginService from './services/login'
 
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
+import { setUser } from './reducers/userReducer'
 
 const App = () => {
-  const [user, setUser] = useState(null)
+
+  let user = useSelector(state => state.user)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -24,11 +25,11 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+      const loggedUser = JSON.parse(loggedUserJSON)
+      dispatch(setUser(loggedUser))
+      blogService.setToken(loggedUser.token)
     }
-  }, [])
+  }, [dispatch])
 
   const createMessage = ({ text='', type }) => {
     dispatch(setNotification(text, type, 5))
@@ -37,15 +38,15 @@ const App = () => {
   const handleLogin = async (username, password) => {
 
     try {
-      const user = await loginService.login({
+      const responseUser = await loginService.login({
         username, password
       })
 
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(responseUser))
+      blogService.setToken(responseUser.token)
+      dispatch(setUser(responseUser))
       createMessage({
-        text: `${user.name ? user.name : user.username} successfully logged in`,
+        text: `${responseUser.name ? responseUser.name : responseUser.username} successfully logged in`,
         type: 'notification'
       })
 
@@ -58,7 +59,7 @@ const App = () => {
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedBlogappUser')
     const loggedOutUser = user.name ? user.name : user.username
-    setUser(null)
+    dispatch(setUser(null))
     createMessage({text:`${loggedOutUser} logged out`, type:'notification'})
   }
 
