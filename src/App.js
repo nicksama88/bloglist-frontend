@@ -1,10 +1,19 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useHistory,
+  useRouteMatch,
+} from 'react-router-dom'
 
 import BlogList from './components/blogList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
+import UserTable from './components/UserTable'
 
 import blogService from './services/blogs'
 
@@ -46,12 +55,19 @@ const App = () => {
         }
         {user &&
           <>
-          <h2>blogs</h2>
-          <p>{user.name ? user.name : user.username} logged-in
-            <button onClick={handleLogout}>logout</button>
-          </p>
-          <BlogForm />
-          <BlogList user={user} />
+            <h2>blogs</h2>
+                <p>{user.name ? user.name : user.username} logged-in
+                  <button onClick={handleLogout}>logout</button>
+                </p>
+            <Switch>
+              <Route path='/users'>
+                <UserTable />
+              </Route>
+              <Route path='/'>
+                <BlogForm />
+                <BlogList user={user} />
+              </Route>
+            </Switch>
           </>
         }
       </div>
