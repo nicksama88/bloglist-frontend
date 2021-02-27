@@ -1,9 +1,39 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import loginService from '../services/login'
+import blogService from '../services/blogs'
+import { setNotification } from '../reducers/notificationReducer'
+import { setUser } from '../reducers/userReducer'
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const dispatch = useDispatch()
+
+  const handleLogin = async (username, password) => {
+
+    try {
+      const responseUser = await loginService.login({
+        username, password
+      })
+  
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(responseUser))
+      blogService.setToken(responseUser.token)
+      dispatch(setUser(responseUser))
+      dispatch(setNotification(
+        `${responseUser.name ? responseUser.name : responseUser.username} successfully logged in`,
+        'notification',
+        5
+        )
+      )
+  
+    } catch (exception) {
+      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      console.log(exception.response.data.error)
+    }
+  }
 
   const loginUser = (event) => {
     event.preventDefault()

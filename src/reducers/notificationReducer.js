@@ -22,7 +22,7 @@ const clearNotification = {
   }
 }
 
-export const setNotification = (text, className, timer) => {
+export const setNotification = (text, className, timer=5) => {
   return dispatch => {
     dispatch({
       type: 'NOTIFICATION',

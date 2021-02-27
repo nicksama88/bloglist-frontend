@@ -7,7 +7,6 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 
 import blogService from './services/blogs'
-import loginService from './services/login'
 
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
@@ -32,28 +31,7 @@ const App = () => {
   }, [dispatch])
 
   const createMessage = ({ text='', type }) => {
-    dispatch(setNotification(text, type, 5))
-  }
-
-  const handleLogin = async (username, password) => {
-
-    try {
-      const responseUser = await loginService.login({
-        username, password
-      })
-
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(responseUser))
-      blogService.setToken(responseUser.token)
-      dispatch(setUser(responseUser))
-      createMessage({
-        text: `${responseUser.name ? responseUser.name : responseUser.username} successfully logged in`,
-        type: 'notification'
-      })
-
-    } catch (exception) {
-      createMessage({text: exception.response.data.error, type: 'error'})
-      console.log(exception.response.data.error)
-    }
+    dispatch(setNotification(text, type))
   }
 
   const handleLogout = (event) => {
@@ -68,7 +46,7 @@ const App = () => {
       <Notification />
       <div>
         {!user &&
-          <LoginForm handleLogin={handleLogin} />
+          <LoginForm />
         }
         {user &&
           <>
