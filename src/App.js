@@ -30,15 +30,11 @@ const App = () => {
     }
   }, [dispatch])
 
-  const createMessage = ({ text='', type }) => {
-    dispatch(setNotification(text, type))
-  }
-
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedBlogappUser')
     const loggedOutUser = user.name ? user.name : user.username
     dispatch(setUser(null))
-    createMessage({text:`${loggedOutUser} logged out`, type:'notification'})
+    dispatch(setNotification(`${loggedOutUser} logged out`, 'notification'))
   }
 
   return (

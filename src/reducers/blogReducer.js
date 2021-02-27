@@ -44,11 +44,10 @@ export const createBlog = (blogObject) => {
       })
       dispatch(setNotification(
         `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-        'notification',
-        5
+        'notification'
       ))
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      dispatch(setNotification(exception.response.data.error, 'error', 7))
       console.log(exception.response.data.error)
     }
     
@@ -66,7 +65,7 @@ export const addLike = (id) => {
         data: changedBlog,
       })
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      dispatch(setNotification(exception.response.data.error, 'error', 7))
       console.log(exception.response.data.error)
     }
   }
@@ -82,12 +81,9 @@ export const deleteBlog = (id) => {
         data: blogToRemove
       })
       dispatch(setNotification(
-        `Blog ${blogToRemove.title} has been removed`,
-        'notification',
-        5
-      ))
+        `Blog ${blogToRemove.title} has been removed`, 'notification'))
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      dispatch(setNotification(exception.response.data.error, 'error', 7))
       console.log(exception.response.data.error)
     }
   }

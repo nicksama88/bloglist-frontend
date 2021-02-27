@@ -24,13 +24,12 @@ const LoginForm = () => {
       dispatch(setUser(responseUser))
       dispatch(setNotification(
         `${responseUser.name ? responseUser.name : responseUser.username} successfully logged in`,
-        'notification',
-        5
+        'notification'
         )
       )
   
     } catch (exception) {
-      dispatch(setNotification(exception.response.data.error, 'error', 5))
+      dispatch(setNotification(exception.response.data.error, 'error', 10))
       console.log(exception.response.data.error)
     }
   }
