@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const User = ({ username, numberOfBlogs }) => {
+const User = ({ username, numberOfBlogs, userId }) => {
   return(
     <tr>
       <td>
-        {username}
+        <Link to={`/users/${userId}`}>{username}</Link>
       </td>
       <td>
         {numberOfBlogs}

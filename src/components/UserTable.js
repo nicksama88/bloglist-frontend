@@ -25,6 +25,7 @@ const UserTable = ({ users }) => {
               key={user.id}
               username={user.username}
               numberOfBlogs={user.blogs.length}
+              userId={user.id}
               />
         )}
         </tbody>
