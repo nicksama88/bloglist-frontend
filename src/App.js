@@ -15,6 +15,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import UserTable from './components/UserTable'
 import UserDetails from './components/UserDetails'
+import BlogDetails from './components/BlogDetails'
 
 import blogService from './services/blogs'
 import userService from './services/users'
@@ -35,11 +36,20 @@ const App = () => {
     fetchUsers()
   }, [])
 
-  const match = useRouteMatch('/users/:id')
-  const targetUser = match
+  const matchUser = useRouteMatch('/users/:id')
+  const targetUser = matchUser
     ? users.find(user => {
-        return(user.id === match.params.id)
+        return(user.id === matchUser.params.id)
       })
+    : null
+
+  let blogs = useSelector(state => state.blogs)
+  
+  const matchBlog = useRouteMatch('/blogs/:id')
+  const targetBlog = matchBlog
+    ? blogs.find(blog => {
+      return(blog.id === matchBlog.params.id)
+    })
     : null
 
   let user = useSelector(state => state.user)
@@ -76,14 +86,17 @@ const App = () => {
           <>
             <h2>blogs</h2>
                 <p>{user.name ? user.name : user.username} logged-in
-                  <button onClick={handleLogout}>logout</button>
                 </p>
+                <button onClick={handleLogout}>logout</button>
             <Switch>
               <Route path='/users/:id'>
                 <UserDetails targetUser={targetUser} />
               </Route>
               <Route path='/users'>
                 <UserTable users={users}/>
+              </Route>
+              <Route path='/blogs/:id'>
+                <BlogDetails targetBlog={targetBlog} />
               </Route>
               <Route path='/'>
                 <BlogForm />
