@@ -9,7 +9,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 
-import BlogList from './components/blogList'
+import BlogList from './components/BlogList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'

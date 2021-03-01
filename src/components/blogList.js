@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { addLike, deleteBlog } from '../reducers/blogReducer'
 
-import Blog from '../components/Blog'
+import Blog from './Blog'
 
 const BlogList = ({ user }) => {
 
