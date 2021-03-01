@@ -1,19 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import User from './User'
-import userService from '../services/users'
 
-const UserTable = () => {
-  const [users, setUsers] = useState([])
-  console.log('users is ', users)
-
-  useEffect(() => {
-
-    const fetchUsers = async () => {
-      const usersResponse = await userService.getAll()
-      setUsers(usersResponse)
-  }
-    fetchUsers()
-  }, [])
+const UserTable = ({ users }) => {
 
   return(
     <>

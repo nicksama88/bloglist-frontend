@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Switch,
@@ -14,14 +14,33 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import UserTable from './components/UserTable'
+import UserDetails from './components/UserDetails'
 
 import blogService from './services/blogs'
+import userService from './services/users'
 
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 
 const App = () => {
+
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usersResponse = await userService.getAll()
+      setUsers(usersResponse)
+  }
+    fetchUsers()
+  }, [])
+
+  const match = useRouteMatch('/users/:id')
+  const targetUser = match
+    ? users.find(user => {
+        return(user.id === match.params.id)
+      })
+    : null
 
   let user = useSelector(state => state.user)
 
@@ -60,8 +79,11 @@ const App = () => {
                   <button onClick={handleLogout}>logout</button>
                 </p>
             <Switch>
+              <Route path='/users/:id'>
+                <UserDetails targetUser={targetUser} />
+              </Route>
               <Route path='/users'>
-                <UserTable />
+                <UserTable users={users}/>
               </Route>
               <Route path='/'>
                 <BlogForm />
