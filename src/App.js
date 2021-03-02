@@ -96,7 +96,7 @@ const App = () => {
                 <UserTable users={users}/>
               </Route>
               <Route path='/blogs/:id'>
-                <BlogDetails targetBlog={targetBlog} />
+                <BlogDetails targetBlog={targetBlog} currentUser={user} />
               </Route>
               <Route path='/'>
                 <BlogForm />

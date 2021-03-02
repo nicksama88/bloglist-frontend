@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
+import { addLike, deleteBlog } from '../reducers/blogReducer'
 
-  const [hideDetails, setShowDetails] = useState(true)
+const Blog = ({ blog, currentUser }) => {
 
-  const showDetails = { display: hideDetails ? 'none' : '' }
-
-  const toggleDetails = () => {
-    setShowDetails(!hideDetails)
-  }
+  const dispatch = useDispatch()
 
   const updateLikes = () => {
-      addLike(blog.id)
+    dispatch(addLike(blog.id))
   }
 
   const callRemoveBlog = () => {
     if (window.confirm(
       `Do you really want to delete ${blog.title}, by ${blog.author}?`
     )) {
-      removeBlog(blog.id)
+      dispatch(deleteBlog(blog.id))
     }
   }
 
@@ -33,34 +31,21 @@ const Blog = ({ blog, addLike, removeBlog, currentUser }) => {
 
   return(
     <div style={blogStyle}>
-      <div>
-        {blog.title}, by {blog.author}
-        <button onClick={toggleDetails}>
-          {hideDetails ? 'show details' : 'hide details'}
-        </button>
-      </div>
-      <div style={showDetails}>
-        <ul style={{listStyleType: 'none'}}>
-          <li>
-            {blog.url}            
-          </li>
-          <li>
-            likes {blog.likes}
-            <button onClick={updateLikes}>
-              like
-            </button>
-          </li>
-          <li>
-            saved by {blog.user.name ? blog.user.name : blog.user.username}
-          </li>
-        </ul>
-        <button
-          onClick={callRemoveBlog}
-          style={
-            {display: currentUser.username === blog.user.username ? '' : 'none'}
-          }
-        >remove</button>
-      </div>
+      <Link to={`/blogs/${blog.id}`}>{`${blog.title}, by ${blog.author}`}</Link>
+      <button
+        onClick={callRemoveBlog}
+        style={{
+            display: currentUser.username === blog.user.username ? '' : 'none',
+            background: 'red',
+            color: 'blue'
+        }}
+        >x
+      </button>
+      <br />
+      {blog.likes} like(s)
+      <button onClick={updateLikes}>
+        updoot
+      </button>
     </div>
   )
 }
