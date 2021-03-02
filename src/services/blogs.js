@@ -31,6 +31,11 @@ const updateOne = async (modifiedBlogObject) => {
   return response.data
 }
 
+const addComment = async (blogObject, comment) => {
+  const response = await axios.post(`${baseUrl}/${blogObject.id}/comments`, {comment: comment})
+  return response.data
+}
+
 const remove = async (blogObject) => {
   // will need to have the proper user token
   const config = {
@@ -41,4 +46,4 @@ const remove = async (blogObject) => {
   return response.data
 }
 
-export default { getAll, getOne, setToken, create, updateOne, remove }
+export default { getAll, getOne, setToken, create, updateOne, addComment, remove }

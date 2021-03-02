@@ -16,6 +16,14 @@ const blogReducer = (state = [], action) => {
       return state
         .map(blog => blog.id !== action.data.id ? blog : changedBlog)
         .sort((a, b) => b.likes - a.likes)
+    case 'COMMENT':
+      const blogToComment = state.find(blog => blog.id === action.data.id)
+      const commentedBlog = {
+        ...blogToComment,
+        comments: action.data.comments
+      }
+      return state
+        .map(blog => blog.id !== action.data.id ? blog : commentedBlog)
     case 'REMOVE':
       return state
         .filter(blog => blog.id !== action.data.id)
@@ -82,6 +90,23 @@ export const deleteBlog = (id) => {
       })
       dispatch(setNotification(
         `Blog ${blogToRemove.title} has been removed`, 'notification'))
+    } catch (exception) {
+      dispatch(setNotification(exception.response.data.error, 'error', 7))
+      console.log(exception.response.data.error)
+    }
+  }
+}
+
+export const addComment = (id, comment) => {
+  return async dispatch => {
+    try {
+      const blogToChange = await blogService.getOne(id)
+      blogToChange.comments.push(comment)
+      const changedBlog = await blogService.addComment(blogToChange, comment)
+      dispatch({
+        type: 'COMMENT',
+        data: changedBlog,
+      })
     } catch (exception) {
       dispatch(setNotification(exception.response.data.error, 'error', 7))
       console.log(exception.response.data.error)
