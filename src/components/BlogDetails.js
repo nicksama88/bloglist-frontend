@@ -34,7 +34,7 @@ const BlogDetails = ({ targetBlog, currentUser }) => {
         <p>
           <a href={targetBlog.url}>{targetBlog.url}</a>
           <br />
-          {targetBlog.likes} likes <button onClick={updateLikes}>like</button>
+          {targetBlog.likes} likes <button onClick={updateLikes}>updoot</button>
           <br />
           added by {targetBlog.user.name
             ? targetBlog.user.name
@@ -51,6 +51,18 @@ const BlogDetails = ({ targetBlog, currentUser }) => {
             >remove
           </button>
         </p>
+        <h3>
+          Comments
+        </h3>
+        <ul>
+          {targetBlog.comments.map((comment, index) => {
+            return(
+              <li key={index}>
+                {comment}
+              </li>
+            )
+          })}
+        </ul>
       </div>
     )
   }

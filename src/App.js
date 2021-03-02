@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   Switch,
   Route,
-  useHistory,
   useRouteMatch,
 } from 'react-router-dom'
 
