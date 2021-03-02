@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   Switch,
   Route,
-  Link,
-  useParams,
   useHistory,
   useRouteMatch,
 } from 'react-router-dom'
 
+import Menu from './components/Menu'
 import BlogList from './components/BlogList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
@@ -20,7 +19,6 @@ import BlogDetails from './components/BlogDetails'
 import blogService from './services/blogs'
 import userService from './services/users'
 
-import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 
@@ -68,15 +66,9 @@ const App = () => {
     }
   }, [dispatch])
 
-  const handleLogout = (event) => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    const loggedOutUser = user.name ? user.name : user.username
-    dispatch(setUser(null))
-    dispatch(setNotification(`${loggedOutUser} logged out`, 'notification'))
-  }
-
   return (
     <div>
+      <Menu user={user} />
       <Notification />
       <div>
         {!user &&
@@ -84,10 +76,7 @@ const App = () => {
         }
         {user &&
           <>
-            <h2>blogs</h2>
-                <p>{user.name ? user.name : user.username} logged-in
-                </p>
-                <button onClick={handleLogout}>logout</button>
+            <h2>Blog App</h2>
             <Switch>
               <Route path='/users/:id'>
                 <UserDetails targetUser={targetUser} />
