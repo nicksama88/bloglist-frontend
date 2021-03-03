@@ -37,7 +37,7 @@ const BlogDetails = ({ targetBlog, currentUser }) => {
     return(
       <div>
         <h2>
-          {targetBlog.title}
+          {targetBlog.title} by {targetBlog.author}
         </h2>
         <p>
           <a href={targetBlog.url}>{targetBlog.url}</a>

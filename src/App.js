@@ -6,6 +6,8 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 
+import { Container } from '@material-ui/core'
+
 import Menu from './components/Menu'
 import BlogList from './components/BlogList'
 import Notification from './components/Notification'
@@ -66,35 +68,37 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <div>
-      <Menu user={user} />
-      <Notification />
+    <Container>
       <div>
-        {!user &&
-          <LoginForm />
-        }
-        {user &&
-          <>
-            <h2>Blog App</h2>
-            <Switch>
-              <Route path='/users/:id'>
-                <UserDetails targetUser={targetUser} />
-              </Route>
-              <Route path='/users'>
-                <UserTable users={users}/>
-              </Route>
-              <Route path='/blogs/:id'>
-                <BlogDetails targetBlog={targetBlog} currentUser={user} />
-              </Route>
-              <Route path='/'>
-                <BlogForm />
-                <BlogList user={user} />
-              </Route>
-            </Switch>
-          </>
-        }
+        <Menu user={user} />
+        <Notification />
+        <div>
+          {!user &&
+            <LoginForm />
+          }
+          {user &&
+            <>
+              <h2>Blog App</h2>
+              <Switch>
+                <Route path='/users/:id'>
+                  <UserDetails targetUser={targetUser} />
+                </Route>
+                <Route path='/users'>
+                  <UserTable users={users}/>
+                </Route>
+                <Route path='/blogs/:id'>
+                  <BlogDetails targetBlog={targetBlog} currentUser={user} />
+                </Route>
+                <Route path='/'>
+                  <BlogForm />
+                  <BlogList user={user} />
+                </Route>
+              </Switch>
+            </>
+          }
+        </div>
       </div>
-    </div>
+    </Container>
   )
 }
 
