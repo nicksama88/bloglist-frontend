@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { TextField, Button } from '@material-ui/core'
+
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+
 import { setNotification } from '../reducers/notificationReducer'
 import { setUser } from '../reducers/userReducer'
 
@@ -42,27 +45,26 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={loginUser}>
+    <form className='loginForm' onSubmit={loginUser}>
       <h2>log in to blog application</h2>
       <div>
-        username
-        <input
-          type='text'
-          value={username}
-          name='Username'
+        <TextField 
+          label='username'
+          variant='outlined'
           onChange={(event) => setUsername(event.target.value)}
-          />
+        />
       </div>
+      <br/>
       <div>
-        password
-        <input
-          type='password'
-          value={password}
-          name='Password'
+        <TextField 
+          label='password' 
+          variant='outlined'
+          type='password' 
           onChange={(event) => setPassword(event.target.value)}
-          />
+        />
       </div>
-      <button type='submit'>login</button>
+      <br/>
+      <Button variant='contained' color='primary' type='submit'>login</Button>
       <div>
         <br/>
         Feel free to login with the following credentials:

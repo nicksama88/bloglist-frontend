@@ -22,18 +22,8 @@ const Blog = ({ blog, currentUser }) => {
     }
   }
 
-  const blogStyle = {
-    padding: 10,
-    border: 'solid',
-    borderRadius: '10px',
-    borderWidth: 1,
-    marginBottom: 10,
-    boxShadow: '5px 5px #888888',
-    background: 'linear-gradient(45deg, aliceblue, antiquewhite)',
-  }
-
   return(
-    <div style={blogStyle}>
+    <div className='blog'>
       <Link to={`/blogs/${blog.id}`}>{`${blog.title}, by ${blog.author}`}</Link>
       <Button
         onClick={callRemoveBlog}
@@ -42,7 +32,7 @@ const Blog = ({ blog, currentUser }) => {
             display: currentUser.username === blog.user.username ? '' : 'none',
             color: 'white',
             float: 'right',
-            background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+            background: 'linear-gradient(45deg, rgb(125, 53, 13) 30%, #FF0000 90%)',
         }}
         >x
       </Button>
