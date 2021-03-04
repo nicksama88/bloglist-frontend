@@ -50,7 +50,7 @@ const LoginForm = () => {
       <div>
         <TextField 
           label='username'
-          variant='outlined'
+          variant='filled'
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
@@ -58,7 +58,7 @@ const LoginForm = () => {
       <div>
         <TextField 
           label='password' 
-          variant='outlined'
+          variant='filled'
           type='password' 
           onChange={(event) => setPassword(event.target.value)}
         />

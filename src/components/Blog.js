@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { Button } from '@material-ui/core'
+import { Button, IconButton } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 import { addLike, deleteBlog } from '../reducers/blogReducer'
 
@@ -25,17 +26,18 @@ const Blog = ({ blog, currentUser }) => {
   return(
     <div className='blog'>
       <Link to={`/blogs/${blog.id}`}>{`${blog.title}, by ${blog.author}`}</Link>
-      <Button
+      <IconButton
         onClick={callRemoveBlog}
+        aria-label='delete'
         variant='contained'
+        color='secondary'
         style={{
             display: currentUser.username === blog.user.username ? '' : 'none',
-            color: 'white',
             float: 'right',
-            background: 'linear-gradient(45deg, rgb(125, 53, 13) 30%, #FF0000 90%)',
         }}
-        >x
-      </Button>
+        >
+          <DeleteIcon />
+      </IconButton>
       <br />
       {blog.likes} like(s)
       <br />

@@ -2,6 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { AppBar, Toolbar, Button } from '@material-ui/core'
+
 import { setUser } from '../reducers/userReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
@@ -21,7 +23,11 @@ const Menu = ({ user }) => {
       const name = user.name ? user.name : user.username
       return (
         <>
-          {name} logged-in <button onClick={handleLogout}>logout</button>
+          {name} logged-in
+          <Button
+          onClick={handleLogout}
+          color='secondary'
+          >logout</Button>
         </>
       )
     } else {
@@ -29,24 +35,20 @@ const Menu = ({ user }) => {
     }
   }
 
-  const padding={
-    paddingRight: 5
-  }
-
-  const navBar={
-    background: 'lightgrey',
-    position: 'fixed',
-    top: '0',
-    overflow: 'hidden',
-    width: '100%'
-  }
-
   return (
-    <div style={navBar}>
-      <Link style={padding} to='/'>blogs</Link>
-      <Link style={padding} to='/users'>users</Link>
-      <em><UserDisplay /></em>
-    </div>
+    <>
+    <AppBar position='static'>
+      <Toolbar>
+        <Button color='inherit' component={Link} to='/'>
+          blogs
+        </Button>
+        <Button color='inherit' component={Link} to='/users'>
+          users
+        </Button>
+        <em><UserDisplay /></em>
+      </Toolbar>
+    </AppBar>
+    </>
   )
 }
 
