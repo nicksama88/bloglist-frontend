@@ -39,7 +39,6 @@ const BlogForm = () => {
       ref={blogFormRef}
     >
     <div>
-      <h2>Create new entry</h2>
       <form onSubmit={addBlog}>
         <div>
           <TextField
