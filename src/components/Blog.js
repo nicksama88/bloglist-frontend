@@ -2,8 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { Button, IconButton } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import ThumbUp from '@material-ui/icons/ThumbUp'
 
 import { addLike, deleteBlog } from '../reducers/blogReducer'
 
@@ -41,9 +42,9 @@ const Blog = ({ blog, currentUser }) => {
       <br />
       {blog.likes} like(s)
       <br />
-      <Button onClick={updateLikes} variant='contained' color='primary'>
-        updoot
-      </Button>
+      <IconButton onClick={updateLikes} variant='contained' color='primary'>
+        <ThumbUp/>
+      </IconButton>
     </div>
   )
 }

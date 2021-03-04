@@ -1,5 +1,9 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react'
 
+import Button from '@material-ui/core/Button'
+import Create from '@material-ui/icons/Create'
+import Cancel from '@material-ui/icons/Cancel'
+
 const Toggleable = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
@@ -16,14 +20,29 @@ const Toggleable = forwardRef((props, ref) => {
     }
   })
 
+  const choiceObj = {
+    Create: <Create />
+  }
+
   return (
     <div style={{paddingBottom: 10}}>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <Button
+          onClick={toggleVisibility}
+          startIcon={choiceObj[props.buttonStyle]}
+        >
+          {props.buttonLabel}
+        </Button>
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <Button
+          onClick={toggleVisibility}
+          startIcon={<Cancel />}
+          color='secondary'
+        >
+          cancel
+        </Button>
       </div>
     </div>
   )

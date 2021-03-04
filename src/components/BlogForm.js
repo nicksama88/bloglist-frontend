@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
+
+import { Button, IconButton, TextField } from '@material-ui/core'
+import Create from '@material-ui/icons/Create'
+
 import { createBlog } from '../reducers/blogReducer'
 import Toggleable from '../components/Toggleable'
 
@@ -29,38 +33,36 @@ const BlogForm = () => {
   }
 
   return (
-    <Toggleable buttonLabel='create new blog entry' ref={blogFormRef}>
+    <Toggleable
+      buttonLabel='create new blog entry' 
+      buttonStyle='Create' 
+      ref={blogFormRef}
+    >
     <div>
       <h2>Create new entry</h2>
       <form onSubmit={addBlog}>
         <div>
-          title:
-          <input
-            type='text'
-            value={title}
-            name='Title'
+          <TextField
+            label='title'
             onChange={(event) => setTitle(event.target.value)}
           />
         </div>
         <div>
-          author:
-          <input
-            type='text'
-            value={author}
-            name='Author'
+        <TextField
+            label='author'
             onChange={(event) => setAuthor(event.target.value)}
           />
         </div>
         <div>
-          url:
-          <input
+        <TextField
+            label='url'
             type='url'
-            value={url}
-            name='Url'
             onChange={(event) => setUrl(event.target.value)}
           />
         </div>
-        <button type='submit'>create entry</button>
+        <Button type='submit' startIcon={<Create />}>
+          create entry
+        </Button>
       </form>
     </div>
     </Toggleable>
