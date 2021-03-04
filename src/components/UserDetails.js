@@ -10,7 +10,7 @@ const UserDetails = ({ targetUser }) => {
     )
   } else {
     return(
-      <>
+      <div className='userDetails'>
         <h2>
           {targetUser.name ? targetUser.name : targetUser.username}
         </h2>
@@ -24,7 +24,7 @@ const UserDetails = ({ targetUser }) => {
             </li>
           )}
         </ul>
-      </>
+      </div>
     )
   }
 

@@ -18,8 +18,8 @@ body {
       monospace;
   }
 
-  .blog, .loginForm, .blogDetails {
-    padding: 10px;
+  .blog, .loginForm, .blogDetails, .userDetails, .userTable {
+    padding: 10px 40px 40px 40px;
     border: solid;
     border-radius: 10px;
     border-width: 1px;
@@ -28,8 +28,8 @@ body {
     background: linear-gradient(45deg, aliceblue, antiquewhite);
   }
 
-  .loginForm {
-    padding: 10px 40px 40px 40px;
+  .blog {
+    padding: 10px;
   }
 
   .notification {
