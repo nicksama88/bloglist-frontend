@@ -33,6 +33,7 @@ const UserTable = ({ users }) => {
           <TableHead>
             <TableRow>
               <TableCell>username</TableCell>
+              <TableCell>name</TableCell>
               <TableCell>blogs created</TableCell>
             </TableRow>
           </TableHead>
@@ -41,6 +42,7 @@ const UserTable = ({ users }) => {
               <User
                 key={user.id}
                 username={user.username}
+                name={user.name}
                 numberOfBlogs={user.blogs.length}
                 userId={user.id}
                 />
