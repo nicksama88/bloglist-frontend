@@ -64,6 +64,7 @@ const LoginForm = () => {
       </div>
       <button type='submit'>login</button>
       <div>
+        <br/>
         Feel free to login with the following credentials:
         <ul>
           <li>
