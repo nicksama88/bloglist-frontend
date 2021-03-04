@@ -70,7 +70,9 @@ const App = () => {
   return (
     <Container>
       <div>
-        <Menu user={user} />
+        {user && 
+          <Menu user={user} />
+        }
         <Notification />
         <div>
           {!user &&
