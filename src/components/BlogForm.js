@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { Button, IconButton, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import Create from '@material-ui/icons/Create'
 
 import { createBlog } from '../reducers/blogReducer'
@@ -44,18 +44,21 @@ const BlogForm = () => {
         <div>
           <TextField
             label='title'
+            value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
         </div>
         <div>
         <TextField
             label='author'
+            value={author}
             onChange={(event) => setAuthor(event.target.value)}
           />
         </div>
         <div>
         <TextField
             label='url'
+            value={url}
             type='url'
             onChange={(event) => setUrl(event.target.value)}
           />

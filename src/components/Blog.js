@@ -30,7 +30,6 @@ const Blog = ({ blog, currentUser }) => {
       <IconButton
         onClick={callRemoveBlog}
         aria-label='delete'
-        variant='contained'
         color='secondary'
         style={{
             display: currentUser.username === blog.user.username ? '' : 'none',

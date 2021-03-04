@@ -18,7 +18,7 @@ body {
       monospace;
   }
 
-  .blog, .loginForm {
+  .blog, .loginForm, .blogDetails {
     padding: 10px;
     border: solid;
     border-radius: 10px;

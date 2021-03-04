@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { AppBar, Toolbar, Button } from '@material-ui/core'
 
@@ -10,12 +10,14 @@ import { setNotification } from '../reducers/notificationReducer'
 const Menu = ({ user }) => {
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedBlogappUser')
     const loggedOutUser = user.name ? user.name : user.username
     dispatch(setUser(null))
     dispatch(setNotification(`${loggedOutUser} logged out`, 'notification'))
+    history.push('/')
   }
 
   const UserDisplay = () => {

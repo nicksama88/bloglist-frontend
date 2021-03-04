@@ -50,14 +50,16 @@ const LoginForm = () => {
       <div>
         <TextField 
           label='username'
+          value={username}
           variant='filled'
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
       <br/>
       <div>
-        <TextField 
-          label='password' 
+        <TextField
+          label='password'
+          value={password}
           variant='filled'
           type='password' 
           onChange={(event) => setPassword(event.target.value)}
