@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { TextField, IconButton } from '@material-ui/core'
 import Create from '@material-ui/icons/Create'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import DeleteIcon from '@material-ui/icons/Delete'
+import ArrowBack from '@material-ui/icons/ArrowBack'
 
 import { addLike, deleteBlog, addComment } from '../reducers/blogReducer'
 
 const BlogDetails = ({ targetBlog, currentUser }) => {
+
+  const history = useHistory()
 
   const [comment, setComment] = useState('')
 
@@ -41,6 +45,9 @@ const BlogDetails = ({ targetBlog, currentUser }) => {
   } else {
     return(
       <div className='blogDetails'>
+        <IconButton onClick={() => history.goBack()}>
+          <ArrowBack />
+        </IconButton>
         <IconButton
             onClick={callRemoveBlog}
             variant='contained'
