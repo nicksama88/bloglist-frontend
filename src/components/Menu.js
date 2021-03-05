@@ -22,10 +22,10 @@ const Menu = ({ user }) => {
 
   const UserDisplay = () => {
     if (user) {
-      const name = user.name ? user.name : user.username
+      // const name = user.name ? user.name : user.username
       return (
         <>
-          {name} logged-in
+          {/* {name} logged-in */}
           <Button
           onClick={handleLogout}
           color='secondary'
@@ -39,12 +39,12 @@ const Menu = ({ user }) => {
 
   return (
     <>
-    <AppBar position='static'>
+    <AppBar position='sticky' color='inherit' >
       <Toolbar>
-        <Button color='inherit' component={Link} to='/'>
+        <Button component={Link} to='/' >
           blogs
         </Button>
-        <Button color='inherit' component={Link} to='/users'>
+        <Button component={Link} to='/users'>
           users
         </Button>
         <em><UserDisplay /></em>

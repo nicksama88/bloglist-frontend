@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+
 import { TextField, Button } from '@material-ui/core'
+import LibraryBooks from '@material-ui/icons/LibraryBooks'
 
 import loginService from '../services/login'
 import blogService from '../services/blogs'
@@ -46,7 +48,8 @@ const LoginForm = () => {
 
   return (
     <form className='loginForm' onSubmit={loginUser}>
-      <h2>log in to blog application</h2>
+      <LibraryBooks fontSize='large'/>
+      <h2>Sign In</h2>
       <div>
         <TextField 
           label='username'

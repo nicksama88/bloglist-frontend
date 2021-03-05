@@ -26,7 +26,6 @@ const Blog = ({ blog, currentUser }) => {
 
   return(
     <div className='blog'>
-      <Link to={`/blogs/${blog.id}`}>{`${blog.title}, by ${blog.author}`}</Link>
       <IconButton
         onClick={callRemoveBlog}
         aria-label='delete'
@@ -38,6 +37,9 @@ const Blog = ({ blog, currentUser }) => {
         >
           <DeleteIcon />
       </IconButton>
+      <Link to={`/blogs/${blog.id}`}>{`${blog.title}`}</Link>
+      <br />
+      {blog.author}
       <br />
       {blog.likes} like(s)
       <br />

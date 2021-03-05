@@ -80,7 +80,6 @@ const App = () => {
           }
           {user &&
             <>
-              <h2>Blog App</h2>
               <Switch>
                 <Route path='/users/:id'>
                   <UserDetails targetUser={targetUser} />

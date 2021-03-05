@@ -24,7 +24,7 @@ const UserDetails = ({ targetUser }) => {
           {targetUser.name ? targetUser.name : targetUser.username}
         </h2>
         <h3>
-          added blogs
+          blogs added
         </h3>
         <ul>
           {targetUser.blogs.map(blog => 

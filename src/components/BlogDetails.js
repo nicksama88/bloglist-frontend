@@ -70,7 +70,7 @@ const BlogDetails = ({ targetBlog, currentUser }) => {
           <br />
           {targetBlog.likes} likes 
           <IconButton onClick={updateLikes}>
-            <ThumbUp />
+            <ThumbUp color='primary'/>
           </IconButton>
           <br />
           added by {targetBlog.user.name
