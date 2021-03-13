@@ -39,7 +39,7 @@ const Menu = ({ user }) => {
 
   return (
     <>
-    <AppBar position='sticky' color='inherit' >
+    <AppBar color='inherit' >
       <Toolbar>
         <Button component={Link} to='/' >
           blogs
