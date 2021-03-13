@@ -12,6 +12,14 @@ const Menu = ({ user }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
+  const spanStyle = {
+    padding: '6px 8px',
+    height: '24.5px',
+    marginLeft: 'auto',
+    display: 'table',
+    textAlign: 'center',
+  }
+
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedBlogappUser')
     const loggedOutUser = user.name ? user.name : user.username
@@ -22,14 +30,10 @@ const Menu = ({ user }) => {
 
   const UserDisplay = () => {
     if (user) {
-      // const name = user.name ? user.name : user.username
+      const name = user.name ? user.name : user.username
       return (
         <>
-          {/* {name} logged-in */}
-          <Button
-          onClick={handleLogout}
-          color='secondary'
-          >logout</Button>
+          {name} logged-in
         </>
       )
     } else {
@@ -47,7 +51,12 @@ const Menu = ({ user }) => {
         <Button component={Link} to='/users'>
           users
         </Button>
-        <em><UserDisplay /></em>
+        <Button onClick={handleLogout} color='secondary'>
+          logout
+        </Button>
+        <span style={spanStyle}>
+          <em><UserDisplay /></em>
+        </span>
       </Toolbar>
     </AppBar>
     </>

@@ -8,7 +8,8 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  Button
+  Button,
+  Grid,
   } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ThumbUp from '@material-ui/icons/ThumbUp'
@@ -23,11 +24,10 @@ const sepStyle = {
 
 const useStyles = makeStyles({
   root: {
-    width: 275,
     height: 275,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-evenly'
   },
   actionArea: {
     display: 'flex',
@@ -35,7 +35,6 @@ const useStyles = makeStyles({
     flexGrow: 1,
     justifyContent: 'flex-start',
     alignItems: 'normal',
-    // borderBottom: 'thin solid plum'
   },
   actions: {
     display: 'flex',
@@ -62,32 +61,38 @@ const Blog = ({ blog, currentUser }) => {
   }
 
   return(
-    <Card className={classes.root}>
-      <CardActionArea className={classes.actionArea}>
-        <CardContent>          
-          <Link to={`/blogs/${blog.id}`}>{`${blog.title}`}</Link>
-          <br />
-          {blog.author}
-          <br />
-          {blog.likes} like(s)
-        </CardContent>
-      </CardActionArea>
-      <div style={sepStyle}/>
-      <CardActions className={classes.actions}>
-        <Button startIcon={<ThumbUp/>} onClick={updateLikes} variant='text' size='large' color='primary' />
-        <Button
-          startIcon={<DeleteIcon/>}
-          size='large'
-          onClick={callRemoveBlog}
-          aria-label='delete'
-          color='secondary'
-          style={{
-              display: currentUser.username === blog.user.username ? '' : 'none',
-          }}
-          >
-        </Button>
-      </CardActions>
-    </Card>
+    <Grid item xs={12} sm={6} md={4}>
+      <Card className={classes.root}>
+        <CardActionArea className={classes.actionArea} component={Link} to={`/blogs/${blog.id}`}>
+          <CardContent>
+            <strong>{blog.title}</strong>
+            <br />
+            {blog.author}
+            <br />
+            {blog.likes} like(s)
+          </CardContent>
+        </CardActionArea>
+        <div style={sepStyle}/>
+        <CardActions className={classes.actions}>
+          <Button
+            startIcon={<ThumbUp/>} 
+            onClick={updateLikes}
+            size='large'
+            color='primary'
+            fullWidth
+          />
+          <Button
+            startIcon={<DeleteIcon/>}
+            size='large'
+            onClick={callRemoveBlog}
+            aria-label='delete'
+            color='secondary'
+            fullWidth
+            disabled={!(currentUser.username === blog.user.username)}
+          />
+        </CardActions>
+      </Card>
+    </Grid>
   )
 }
 
