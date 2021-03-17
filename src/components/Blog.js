@@ -40,6 +40,11 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-around',
   },
+  content: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
 })
 
 const Blog = ({ blog, currentUser }) => {
@@ -64,7 +69,7 @@ const Blog = ({ blog, currentUser }) => {
     <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.root}>
         <CardActionArea className={classes.actionArea} component={Link} to={`/blogs/${blog.id}`}>
-          <CardContent>
+          <CardContent className = {classes.content}>
             <strong>{blog.title}</strong>
             <br />
             {blog.author}
