@@ -22,10 +22,19 @@ const sepStyle = {
   paddingTop: 4,
 }
 
+const commentStyle = {
+  marginTop: '1em',
+}
+
+const liStyle = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+}
+
 const useStyles = makeStyles({
   root: {
     background: 'ivory',
-    height: 275,
+    height: 300,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly'
@@ -71,11 +80,26 @@ const Blog = ({ blog, currentUser }) => {
       <Card className={classes.root}>
         <CardActionArea className={classes.actionArea} component={Link} to={`/blogs/${blog.id}`}>
           <CardContent className = {classes.content}>
-            <strong>{blog.title}</strong>
-            <br />
-            {blog.author}
-            <br />
-            {blog.likes} like(s)
+              <strong>{blog.title}</strong>
+              <br />
+              {blog.author}
+              <br />
+              {blog.likes} like(s)
+            <div style={commentStyle}>
+              <strong>Comments</strong>
+              <ul>
+                {blog.comments.map((comment, index) => {
+                  return(
+                  index < 3
+                    ? <li style={liStyle} key={index}>{comment}</li>
+                    : null
+                  )
+                })}
+                {blog.comments.length > 3
+                  ? <li style={liStyle} key='ellipse'>...</li>
+                  : null}
+              </ul>
+            </div>
           </CardContent>
         </CardActionArea>
         <div style={sepStyle}/>
