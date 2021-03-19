@@ -26,9 +26,14 @@ const commentStyle = {
   marginTop: '1em',
 }
 
+const ulStyle = {
+  paddingLeft: '20px',
+}
+
 const liStyle = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
+  listStylePosition: 'inside',
 }
 
 const useStyles = makeStyles({
@@ -87,7 +92,7 @@ const Blog = ({ blog, currentUser }) => {
               {blog.likes} like(s)
             <div style={commentStyle}>
               <strong>Comments</strong>
-              <ul>
+              <ul style={ulStyle}>
                 {blog.comments.map((comment, index) => {
                   return(
                   index < 3
