@@ -43,7 +43,7 @@ const Menu = ({ user }) => {
 
   return (
     <>
-    <AppBar color='inherit' style={{background: 'linear-gradient(45deg, aliceblue, antiquewhite)'}} >
+    <AppBar color='inherit' style={{background: 'ivory'}} >
       <Toolbar>
         <Button component={Link} to='/' >
           blogs

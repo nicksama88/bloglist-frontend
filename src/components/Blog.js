@@ -24,7 +24,7 @@ const sepStyle = {
 
 const useStyles = makeStyles({
   root: {
-    background: 'linear-gradient(45deg, aliceblue, antiquewhite)',
+    background: 'ivory',
     height: 275,
     display: 'flex',
     flexDirection: 'column',
